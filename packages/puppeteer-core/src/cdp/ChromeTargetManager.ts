@@ -325,7 +325,7 @@ export class ChromeTargetManager
     // `this.#connection.isAutoAttached(targetInfo.targetId)`. In the future, we
     // should determine if a target is auto-attached or not with the help of
     // CDP.
-    if (targetInfo.type === 'service_worker') {
+    if (targetInfo.type === 'service_worker' || targetInfo.type === 'iframe' || targetInfo.type === 'worker') {
       this.#finishInitializationIfReady(targetInfo.targetId);
       await silentDetach();
       if (this.#attachedTargetsByTargetId.has(targetInfo.targetId)) {
