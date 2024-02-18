@@ -1,5 +1,5 @@
 {
-  "name": "mytestpuppeteer",
+  "name": "mypuppeteer",
   "version": "21.11.0",
   "description": "A high-level API to control headless Chrome over the DevTools Protocol",
   "keywords": [
