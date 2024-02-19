@@ -325,7 +325,7 @@ export class ChromeTargetManager
     // `this.#connection.isAutoAttached(targetInfo.targetId)`. In the future, we
     // should determine if a target is auto-attached or not with the help of
     // CDP.
-    if (targetInfo.type === 'service_worker' || targetInfo.type === 'iframe' || targetInfo.type === 'worker') {
+    if (targetInfo.type === 'service_worker') {
       this.#finishInitializationIfReady(targetInfo.targetId);
       await silentDetach();
       if (this.#attachedTargetsByTargetId.has(targetInfo.targetId)) {
@@ -336,6 +336,11 @@ export class ChromeTargetManager
       this.#attachedTargetsByTargetId.set(targetInfo.targetId, target);
       this.emit(TargetManagerEvent.TargetAvailable, target);
       return;
+    }
+
+    if ((targetInfo.type === 'worker' || targetInfo.type === 'iframe')) {
+      // Hack https://abrahamjuliot.github.io/creepjs
+      await silentDetach();
     }
 
     const isExistingTarget = this.#attachedTargetsByTargetId.has(
